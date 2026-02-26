@@ -4,22 +4,20 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUspEescInternships do
   @base_url "https://eesc.usp.br/estagios"
 
   def run(_input, _opts, _context) do
-    case get_internships_urls() do
-      {:ok, urls} -> {:ok, urls}
-      {:error, reason} -> {:error, reason}
+    with {:ok, urls} <- get_internships_urls() do
+      urls
+      |> Enum.map(&extract_internship_attrs_from_url/1)
+      |> then(&{:ok, &1})
     end
   end
 
   defp get_internships_urls() do
     with {:ok, html_tree} <- get_html_tree(@base_url <> "/posts.php") do
-      urls =
-        html_tree
-        |> Floki.find("#v-pills-tabContent h5 a")
-        |> Floki.attribute("href")
-        |> Enum.map(&build_internship_full_url/1)
-        |> Enum.map(&extract_internship_attrs_from_url/1)
-
-      {:ok, urls}
+      html_tree
+      |> Floki.find("#v-pills-tabContent h5 a")
+      |> Floki.attribute("href")
+      |> Enum.map(&build_internship_full_url/1)
+      |> then(&{:ok, &1})
     end
   end
 
