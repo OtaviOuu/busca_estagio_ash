@@ -10,8 +10,13 @@ defmodule BuscaEstagio.Internships.Internship do
   end
 
   actions do
-    defaults [:read, :destroy, :update]
+    defaults [:destroy, :update]
     default_accept [:id, :title, :description, :source]
+
+    read :read do
+      primary? true
+      pagination required?: true, offset?: true, keyset?: true
+    end
 
     create :create do
       primary? true

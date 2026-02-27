@@ -10,6 +10,7 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
     ~H"""
     <Layouts.app {assigns}>
       <Cinder.collection
+        page_size={[default: 10, options: [10, 25, 50, 100]]}
         resource={BuscaEstagio.Internships.Internship}
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
