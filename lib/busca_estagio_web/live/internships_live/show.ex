@@ -11,6 +11,7 @@ defmodule BuscaEstagioWeb.InternshipsLive.Show do
     ~H"""
     <Layouts.app {assigns}>
       <.header>{@internship.title}</.header>
+      <div>{raw(@internship.description)}</div>
     </Layouts.app>
     """
   end

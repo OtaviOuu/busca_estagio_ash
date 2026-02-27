@@ -27,7 +27,7 @@ defmodule BuscaEstagio.Internships.Changes.GenerateDescription do
     """
 
     user_prompt = """
-    Generate a formatted internship description from the following HTML:
+    Generate a formatted internship description from the following HTML. Return only text. this text will be inserted in a html page, so you can use basic html tags like <p>, <ul>, <li>, <br> to format the description, but avoid using complex tags like <div> or <span>.:
 
     #{description_html}
     """

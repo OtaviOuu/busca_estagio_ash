@@ -42,9 +42,10 @@ defmodule BuscaEstagio.Internships.Internship do
       allow_nil? false
     end
 
-    attribute :source, :string do
+    attribute :source, :atom do
       public? true
       allow_nil? false
+      constraints one_of: [:usp_eesc, :ufmg_icex, :usp_icmc]
     end
 
     timestamps()

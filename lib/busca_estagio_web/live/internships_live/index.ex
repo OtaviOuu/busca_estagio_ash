@@ -14,8 +14,21 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
         <:col :let={internship} field="title" filter sort>{internship.title}</:col>
-        <:col :let={internship} field="source" filter sort>{internship.source}</:col>
-        <:col :let={internship} field="inserted_at" filter sort>{internship.inserted_at}</:col>
+        <:col
+          :let={internship}
+          field="source"
+          filter={[
+            type: :select,
+            options: [
+              {"USP-EESC", "usp_eesc"},
+              {"USP-ICMC", "usp_icmc"},
+              {"UFMG-ICEX", "ufmg_icex"}
+            ]
+          ]}
+        >
+          {internship.source}
+        </:col>
+        <:col :let={internship} field="inserted_at">{internship.inserted_at}</:col>
       </Cinder.collection>
     </Layouts.app>
     """
