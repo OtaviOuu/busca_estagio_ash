@@ -10,17 +10,20 @@ defmodule BuscaEstagio.Internships.Internship do
   end
 
   actions do
-    defaults [:read, :destroy]
+    defaults [:read, :destroy, :update]
+    default_accept [:id, :title, :description, :source]
 
     create :create do
-      accept [:title]
+      accept [:title, :source]
 
       argument :description_html, :string do
         allow_nil? false
       end
-
-      change BuscaEstagio.Internships.Changes.GenerateDescription
     end
+  end
+
+  preparations do
+    prepare build(load: [:description_preview])
   end
 
   attributes do
@@ -36,6 +39,22 @@ defmodule BuscaEstagio.Internships.Internship do
       allow_nil? false
     end
 
+    attribute :source, :string do
+      public? true
+      allow_nil? false
+    end
+
     timestamps()
+  end
+
+  calculations do
+    calculate :description_preview,
+              :string,
+              expr(
+                fragment(
+                  "substring(? from 1 for 200)",
+                  description
+                )
+              )
   end
 end

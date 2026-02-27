@@ -41,6 +41,7 @@ defmodule BuscaEstagio.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:cinder, "~> 0.11"},
       {:sourceror, "~> 1.8", only: [:dev, :test]},
       {:oban, "~> 2.0"},
       {:oban_web, "~> 2.0"},

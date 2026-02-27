@@ -7,6 +7,7 @@
 # General application configuration
 import Config
 
+config :cinder, default_theme: "modern"
 config :ash_oban, pro?: false
 
 config :busca_estagio, Oban,
