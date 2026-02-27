@@ -25,10 +25,11 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
               {"UFMG-ICEX", "ufmg_icex"}
             ]
           ]}
+          sort
         >
           {internship.source}
         </:col>
-        <:col :let={internship} field="inserted_at">{internship.inserted_at}</:col>
+        <:col :let={internship} field="inserted_at" sort>{internship.inserted_at}</:col>
       </Cinder.collection>
     </Layouts.app>
     """
