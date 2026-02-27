@@ -4,7 +4,7 @@ defmodule BuscaEstagio.Scraper.USP do
     domain: BuscaEstagio.Scraper
 
   actions do
-    action :scrape_usp_eesc_internships do
+    action :scrape_usp_eesc_internships, {:array, :struct} do
       run BuscaEstagio.Scraper.Actions.ScrapeUspEescInternships
     end
   end

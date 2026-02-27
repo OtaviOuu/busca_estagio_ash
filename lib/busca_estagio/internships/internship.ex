@@ -14,11 +14,14 @@ defmodule BuscaEstagio.Internships.Internship do
     default_accept [:id, :title, :description, :source]
 
     create :create do
+      primary? true
       accept [:title, :source]
 
       argument :description_html, :string do
         allow_nil? false
       end
+
+      change BuscaEstagio.Internships.Changes.GenerateDescription
     end
   end
 

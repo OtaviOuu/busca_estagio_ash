@@ -15,7 +15,14 @@ config :busca_estagio, Oban,
   notifier: Oban.Notifiers.Postgres,
   queues: [default: 10],
   repo: BuscaEstagio.Repo,
-  plugins: [{Oban.Plugins.Cron, []}]
+  plugins: [
+    {Oban.Plugins.Cron,
+     [
+       crontab: [
+         {"*/10 * * * *", BuscaEstagio.Scraper.Worker}
+       ]
+     ]}
+  ]
 
 config :ash,
   allow_forbidden_field_for_relationships_by_default?: true,

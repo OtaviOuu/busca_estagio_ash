@@ -3,6 +3,8 @@ defmodule BuscaEstagio.Scraper do
     otp_app: :busca_estagio
 
   resources do
-    resource BuscaEstagio.Scraper.USP
+    resource BuscaEstagio.Scraper.USP do
+      define :scrape_usp_internships, action: :scrape_usp_eesc_internships
+    end
   end
 end

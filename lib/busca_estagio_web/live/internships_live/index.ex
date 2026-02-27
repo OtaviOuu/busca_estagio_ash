@@ -1,4 +1,4 @@
-defmodule BuscaEstagioWeb.HomeLive.Index do
+defmodule BuscaEstagioWeb.InternshipsLive.Index do
   use BuscaEstagioWeb, :live_view
 
   def mount(params, session, socket) do
@@ -9,7 +9,10 @@ defmodule BuscaEstagioWeb.HomeLive.Index do
   def render(assigns) do
     ~H"""
     <Layouts.app {assigns}>
-      <Cinder.collection resource={BuscaEstagio.Internships.Internship}>
+      <Cinder.collection
+        resource={BuscaEstagio.Internships.Internship}
+        click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
+      >
         <:col :let={internship} field="title" filter sort>{internship.title}</:col>
         <:col :let={internship} field="source" filter sort>{internship.source}</:col>
         <:col :let={internship} field="inserted_at" filter sort>{internship.inserted_at}</:col>

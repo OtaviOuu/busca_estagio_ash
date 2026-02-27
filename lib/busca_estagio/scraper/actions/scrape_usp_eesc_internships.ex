@@ -1,9 +1,11 @@
 defmodule BuscaEstagio.Scraper.Actions.ScrapeUspEescInternships do
   use Ash.Resource.Actions.Implementation
-
+  require Logger
   @base_url "https://eesc.usp.br/estagios"
 
   def run(_input, _opts, _context) do
+    Logger.info("Starting to scrape internships from USP EESC...")
+
     with {:ok, urls} <- get_internships_urls() do
       urls
       |> Enum.map(&extract_internship_attrs_from_url/1)
@@ -36,7 +38,8 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUspEescInternships do
         |> Floki.find("div.mt-4")
         |> Floki.raw_html()
 
-      %{title: title, description: description}
+      source = :usp_eesc
+      %{title: title, description_html: description, source: source}
     else
       {:error, reason} -> {:error, reason}
     end

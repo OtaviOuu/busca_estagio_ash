@@ -19,7 +19,8 @@ defmodule BuscaEstagioWeb.Router do
   scope "/", BuscaEstagioWeb do
     pipe_through :browser
 
-    live "/", HomeLive.Index, :index
+    live "/", InternshipsLive.Index, :index
+    live "/internships/:id", InternshipsLive.Show, :show
   end
 
   # Other scopes may use custom stacks.

@@ -1,9 +1,14 @@
 defmodule BuscaEstagio.Internships.Changes.GenerateDescription do
   use Ash.Resource.Change
+  require Logger
 
   @model "groq:openai/gpt-oss-120b"
 
   def change(changeset, _opts, _ctx) do
+    Logger.info(
+      "Generating description for internship with title: #{Ash.Changeset.get_argument(changeset, :title)}"
+    )
+
     description_html = Ash.Changeset.get_argument(changeset, :description_html)
 
     Ash.Changeset.change_attribute(
