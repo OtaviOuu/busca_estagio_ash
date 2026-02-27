@@ -20,6 +20,9 @@ if System.get_env("PHX_SERVER") do
   config :busca_estagio, BuscaEstagioWeb.Endpoint, server: true
 end
 
+config :busca_estagio,
+  groq_api_key: System.get_env("GROQ_API_KEY") || raise("GROQ_API_KEY environment variable is missing")
+
 config :busca_estagio, BuscaEstagioWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 

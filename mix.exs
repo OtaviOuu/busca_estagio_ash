@@ -76,7 +76,8 @@ defmodule BuscaEstagio.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:floki, "~> 0.38.0"}
+      {:floki, "~> 0.38.0"},
+      {:req_llm, "~> 1.6.0"}
     ]
   end
 

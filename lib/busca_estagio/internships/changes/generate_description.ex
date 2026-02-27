@@ -1,13 +1,45 @@
 defmodule BuscaEstagio.Internships.Changes.GenerateDescription do
   use Ash.Resource.Change
 
+  @model "groq:openai/gpt-oss-120b"
+
   def change(changeset, _opts, _ctx) do
     description_html = Ash.Changeset.get_argument(changeset, :description_html)
 
     Ash.Changeset.change_attribute(
       changeset,
       :description,
-      String.slice(description_html, 3..4)
+      generate_description_from_html(description_html)
     )
+  end
+
+  defp generate_description_from_html(description_html) do
+    system_prompt = """
+    you are a helpful assistant that generates internship descriptions based on HTML input
+
+    dont use emojis in the description
+
+    """
+
+    user_prompt = """
+    Generate a formatted internship description from the following HTML:
+
+    #{description_html}
+    """
+
+    ReqLLM.generate_text!(
+      @model,
+      ReqLLM.Context.new([
+        ReqLLM.Context.system(system_prompt),
+        ReqLLM.Context.user(user_prompt)
+      ]),
+      temperature: 0.7,
+      max_tokens: 2000,
+      api_key: groq_api_key()
+    )
+  end
+
+  defp groq_api_key do
+    Application.fetch_env!(:busca_estagio, :groq_api_key)
   end
 end
