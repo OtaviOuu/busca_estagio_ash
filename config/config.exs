@@ -60,7 +60,7 @@ config :spark,
 config :busca_estagio,
   ecto_repos: [BuscaEstagio.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [BuscaEstagio.Scraper]
+  ash_domains: [BuscaEstagio.Internships, BuscaEstagio.Scraper]
 
 # Configure the endpoint
 config :busca_estagio, BuscaEstagioWeb.Endpoint,
