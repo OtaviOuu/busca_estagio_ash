@@ -21,7 +21,7 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
         <:col :let={internship} field="title" filter sort>
-          {internship.title} <.is_new_badge :if={internship.is_new?} />
+          {format_title(internship.title)}
         </:col>
         <:col :let={internship} field="views" sort>
           <.views_badge views={internship.views} />
@@ -80,10 +80,12 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
     """
   end
 
-  defp is_new_badge(assigns) do
-    ~H"""
-    <div class="badge badge-success">Nova</div>
-    """
+  def format_title(title) do
+    if String.length(title) > 50 do
+      String.slice(title, 0..50) <> "..."
+    else
+      title
+    end
   end
 
   def handle_info(
