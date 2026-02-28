@@ -19,7 +19,7 @@ config :busca_estagio, Oban,
     {Oban.Plugins.Cron,
      [
        crontab: [
-         {"*/10 * * * *", BuscaEstagio.Scraper.Worker}
+         {"*/5 * * * *", BuscaEstagio.Scraper.Worker}
        ]
      ]}
   ]

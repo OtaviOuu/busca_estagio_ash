@@ -30,13 +30,31 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
           ]}
           sort
         >
-          {internship.source}
+          <.uni_badge source={internship.source} />
         </:col>
         <:col :let={internship} field="inserted_at" sort>
           {internship.inserted_at |> DateTime.to_date() |> Date.to_string()}
         </:col>
       </Cinder.collection>
     </Layouts.app>
+    """
+  end
+
+  defp uni_badge(%{source: :usp_eesc} = assigns) do
+    ~H"""
+    <div class="badge badge-secundary">USP-EESC</div>
+    """
+  end
+
+  defp uni_badge(%{source: :usp_icmc} = assigns) do
+    ~H"""
+    <div class="badge badge-secundary">USP-ICMC</div>
+    """
+  end
+
+  defp uni_badge(%{source: :ufmg_icex} = assigns) do
+    ~H"""
+    <div class="badge badge-secundary">UFMG-ICEX</div>
     """
   end
 

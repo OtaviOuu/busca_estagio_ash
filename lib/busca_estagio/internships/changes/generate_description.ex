@@ -6,7 +6,7 @@ defmodule BuscaEstagio.Internships.Changes.GenerateDescription do
 
   def change(changeset, _opts, _ctx) do
     Logger.info(
-      "Generating description for internship with title: #{Ash.Changeset.get_argument(changeset, :title)}"
+      "Generating description for internship with title: #{Ash.Changeset.get_attribute(changeset, :title)}"
     )
 
     description_html = Ash.Changeset.get_argument(changeset, :description_html)
