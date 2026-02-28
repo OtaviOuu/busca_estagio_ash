@@ -2,7 +2,8 @@ defmodule BuscaEstagio.Internships.Internship do
   use Ash.Resource,
     otp_app: :busca_estagio,
     domain: BuscaEstagio.Internships,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    notifiers: [Ash.Notifier.PubSub]
 
   postgres do
     table "internships"
@@ -18,6 +19,18 @@ defmodule BuscaEstagio.Internships.Internship do
       pagination required?: true, offset?: true, keyset?: true
     end
 
+    read :by_id do
+      get? true
+      argument :id, :uuid, public?: true
+
+      filter expr(id == ^arg(:id))
+    end
+
+    update :increment_views do
+      accept []
+      change atomic_update(:views, expr(views + 1))
+    end
+
     create :create do
       primary? true
       accept [:title, :source, :url]
@@ -28,6 +41,13 @@ defmodule BuscaEstagio.Internships.Internship do
 
       change BuscaEstagio.Internships.Changes.GenerateDescription
     end
+  end
+
+  pub_sub do
+    module BuscaEstagioWeb.Endpoint
+
+    prefix "internship"
+    publish :increment_views, ["viewed"]
   end
 
   preparations do
@@ -51,6 +71,12 @@ defmodule BuscaEstagio.Internships.Internship do
       public? true
       allow_nil? false
       constraints one_of: [:usp_eesc, :ufmg_icex, :usp_icmc]
+    end
+
+    attribute :views, :integer do
+      public? true
+      allow_nil? false
+      default 0
     end
 
     attribute :url, :string do

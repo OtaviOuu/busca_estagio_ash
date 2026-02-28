@@ -1,7 +1,12 @@
 defmodule BuscaEstagioWeb.InternshipsLive.Index do
   use BuscaEstagioWeb, :live_view
+  import Cinder
 
   def mount(params, _session, socket) do
+    if connected?(socket) do
+      BuscaEstagioWeb.Endpoint.subscribe("internship:viewed")
+    end
+
     socket
     |> ok()
   end
@@ -10,12 +15,16 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
     ~H"""
     <Layouts.app {assigns}>
       <Cinder.collection
+        id="internships-collection"
         page_size={[default: 10, options: [10, 25, 50, 100]]}
         resource={BuscaEstagio.Internships.Internship}
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
         <:col :let={internship} field="title" filter sort>
           {internship.title} <.is_new_badge :if={internship.is_new?} />
+        </:col>
+        <:col :let={internship} field="views" sort>
+          <.views_badge views={internship.views} />
         </:col>
         <:col
           :let={internship}
@@ -58,9 +67,27 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
     """
   end
 
+  defp views_badge(%{views: views} = assigns) do
+    ~H"""
+    <div class="badge badge-secundary">{views}</div>
+    """
+  end
+
   defp is_new_badge(assigns) do
     ~H"""
     <div class="badge badge-success">Nova</div>
     """
+  end
+
+  def handle_info(
+        %Phoenix.Socket.Broadcast{
+          payload: %Ash.Notifier.Notification{data: %{views: views, id: id}}
+        },
+        socket
+      ) do
+    {:noreply,
+     update_if_visible(socket, "internships-collection", id, fn internship ->
+       %{internship | views: views}
+     end)}
   end
 end

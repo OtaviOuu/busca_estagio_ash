@@ -11,7 +11,8 @@ defmodule BuscaEstagio.Internships do
     resource BuscaEstagio.Internships.Internship do
       define :create_internship, action: :create
       define :list_internships, action: :read
-      define :get_internship, action: :read, get_by: :id
+      define :get_internship, action: :by_id, args: [:id]
+      define :view_internship, action: :increment_views
     end
   end
 end

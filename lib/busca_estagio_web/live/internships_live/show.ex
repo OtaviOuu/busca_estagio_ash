@@ -2,6 +2,10 @@ defmodule BuscaEstagioWeb.InternshipsLive.Show do
   use BuscaEstagioWeb, :live_view
 
   def mount(%{"id" => id}, _session, socket) do
+    if connected?(socket) do
+      BuscaEstagio.Internships.view_internship(id)
+    end
+
     socket
     |> assign(:internship, BuscaEstagio.Internships.get_internship!(id))
     |> ok()

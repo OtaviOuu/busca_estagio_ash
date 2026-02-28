@@ -9,6 +9,7 @@ import Config
 
 config :cinder, default_theme: "modern"
 config :ash_oban, pro?: false
+config :ash, :pub_sub, debug?: true
 
 config :busca_estagio, Oban,
   engine: Oban.Engines.Basic,
