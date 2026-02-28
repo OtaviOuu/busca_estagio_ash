@@ -31,7 +31,7 @@ defmodule BuscaEstagio.Internships.Internship do
   end
 
   preparations do
-    prepare build(load: [:description_preview])
+    prepare build(load: [:description_preview, :is_new?])
   end
 
   attributes do
@@ -57,6 +57,10 @@ defmodule BuscaEstagio.Internships.Internship do
   end
 
   calculations do
+    calculate :is_new?,
+              :boolean,
+              expr(inserted_at > ^DateTime.add(DateTime.utc_now(), -7 * 24 * 60 * 60))
+
     calculate :description_preview,
               :string,
               expr(

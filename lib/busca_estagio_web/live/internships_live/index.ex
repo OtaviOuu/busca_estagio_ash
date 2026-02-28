@@ -1,7 +1,7 @@
 defmodule BuscaEstagioWeb.InternshipsLive.Index do
   use BuscaEstagioWeb, :live_view
 
-  def mount(params, session, socket) do
+  def mount(params, _session, socket) do
     socket
     |> ok()
   end
@@ -14,7 +14,9 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
         resource={BuscaEstagio.Internships.Internship}
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
-        <:col :let={internship} field="title" filter sort>{internship.title}</:col>
+        <:col :let={internship} field="title" filter sort>
+          {internship.title} <.is_new_badge :if={internship.is_new?} />
+        </:col>
         <:col
           :let={internship}
           field="source"
@@ -30,9 +32,17 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
         >
           {internship.source}
         </:col>
-        <:col :let={internship} field="inserted_at" sort>{internship.inserted_at}</:col>
+        <:col :let={internship} field="inserted_at" sort>
+          {internship.inserted_at |> DateTime.to_date() |> Date.to_string()}
+        </:col>
       </Cinder.collection>
     </Layouts.app>
+    """
+  end
+
+  defp is_new_badge(assigns) do
+    ~H"""
+    <div class="badge badge-success">Nova</div>
     """
   end
 end
