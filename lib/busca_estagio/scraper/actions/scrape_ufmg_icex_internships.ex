@@ -8,7 +8,20 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUfmgIcexInternships do
 
     with {:ok, urls} <- get_internships_urls() do
       urls
-      |> Enum.map(&extract_internship_attrs_from_url/1)
+      |> Task.async_stream(
+        &extract_internship_attrs_from_url/1,
+        max_concurrency: 20,
+        timeout: 30_000,
+        ordered: false
+      )
+      |> Enum.reduce([], fn
+        {:ok, result}, acc ->
+          [result | acc]
+
+        {:error, reason}, acc ->
+          Logger.error("Task failed: #{inspect(reason)}")
+          acc
+      end)
       |> then(&{:ok, &1})
     end
   end

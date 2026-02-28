@@ -8,14 +8,12 @@ defmodule BuscaEstagio.Scraper.Worker do
       all_attrs =
         (usp_eesc_attrs ++ ufmg_icex_attrs ++ usp_fearp_attrs) |> Enum.uniq_by(& &1.url)
 
-      a =
-        Ash.bulk_create(all_attrs, BuscaEstagio.Internships.Internship, :create,
-          upsert?: true,
-          upsert_identity: :unique_url,
-          upsert_fields: [:title, :description, :source]
-        )
+      Ash.bulk_create(all_attrs, BuscaEstagio.Internships.Internship, :create,
+        upsert?: true,
+        upsert_identity: :unique_url,
+        upsert_fields: [:title, :description, :source]
+      )
 
-      IO.inspect(a)
       :ok
     end
   end

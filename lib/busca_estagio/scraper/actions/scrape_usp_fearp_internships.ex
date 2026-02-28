@@ -9,7 +9,20 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUspFearpInternships do
 
     with {:ok, urls} <- get_internships_urls() do
       urls
-      |> Enum.map(&extract_internship_attrs_from_url/1)
+      |> Task.async_stream(
+        &extract_internship_attrs_from_url/1,
+        max_concurrency: 20,
+        timeout: 30_000,
+        ordered: false
+      )
+      |> Enum.reduce([], fn
+        {:ok, result}, acc ->
+          [result | acc]
+
+        {:error, reason}, acc ->
+          Logger.error("Task failed: #{inspect(reason)}")
+          acc
+      end)
       |> then(&{:ok, &1})
     end
   end
@@ -19,6 +32,13 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUspFearpInternships do
       html_tree
       |> Floki.find("#k2Container .itemBody a")
       |> Floki.attribute("href")
+      |> Enum.reduce([], fn href, acc ->
+        if String.contains?(href, ".pdf") do
+          [href | acc]
+        else
+          acc
+        end
+      end)
       |> Enum.map(&build_internship_full_url/1)
       |> then(&{:ok, &1})
     end
