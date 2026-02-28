@@ -45,6 +45,6 @@ defmodule BuscaEstagio.Internships.Changes.GenerateDescription do
   end
 
   defp groq_api_key do
-    Application.fetch_env!(:busca_estagio, :groq_api_key)
+    ""
   end
 end

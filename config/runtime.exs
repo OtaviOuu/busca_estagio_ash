@@ -20,8 +20,6 @@ if System.get_env("PHX_SERVER") do
   config :busca_estagio, BuscaEstagioWeb.Endpoint, server: true
 end
 
-config :busca_estagio,
-  groq_api_key: System.get_env("GROQ_API_KEY") || raise("GROQ_API_KEY environment variable is missing")
 
 config :busca_estagio, BuscaEstagioWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
@@ -56,7 +54,9 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+
+  host = System.get_env("RENDER_EXTERNAL_HOSTNAME") || "localhost"
+  port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :busca_estagio, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
