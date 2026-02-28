@@ -20,7 +20,7 @@ defmodule BuscaEstagio.Internships.Internship do
 
     create :create do
       primary? true
-      accept [:title, :source]
+      accept [:title, :source, :url]
 
       argument :description_html, :string do
         allow_nil? false
@@ -53,6 +53,11 @@ defmodule BuscaEstagio.Internships.Internship do
       constraints one_of: [:usp_eesc, :ufmg_icex, :usp_icmc]
     end
 
+    attribute :url, :string do
+      public? true
+      allow_nil? false
+    end
+
     timestamps()
   end
 
@@ -69,5 +74,9 @@ defmodule BuscaEstagio.Internships.Internship do
                   description
                 )
               )
+  end
+
+  identities do
+    identity :unique_url, [:url]
   end
 end

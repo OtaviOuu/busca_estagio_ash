@@ -37,7 +37,7 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUfmgIcexInternships do
         |> Floki.find("div.entry-content.clear")
         |> Floki.raw_html()
 
-      %{title: title, description_html: description, source: @source}
+      %{title: title, description_html: description, source: @source, url: url}
     else
       {:error, reason} -> {:error, reason}
     end

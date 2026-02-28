@@ -10,9 +10,23 @@ defmodule BuscaEstagioWeb.InternshipsLive.Show do
   def render(assigns) do
     ~H"""
     <Layouts.app {assigns}>
-      <.header>{@internship.title}</.header>
+      <.header>
+        {@internship.title}
+
+        <:subtitle>
+          <.url_barge url={@internship.url} />
+        </:subtitle>
+      </.header>
       <div>{raw(@internship.description)}</div>
     </Layouts.app>
+    """
+  end
+
+  defp url_barge(assigns) do
+    ~H"""
+    <a href={@url} class="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
+      Ver no site de origem
+    </a>
     """
   end
 end

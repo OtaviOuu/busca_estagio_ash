@@ -39,7 +39,7 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUspEescInternships do
         |> Floki.raw_html()
 
       source = :usp_eesc
-      %{title: title, description_html: description, source: source}
+      %{title: title, description_html: description, source: source, url: url}
     else
       {:error, reason} -> {:error, reason}
     end
