@@ -14,7 +14,7 @@ defmodule BuscaEstagio.Internships.Changes.GenerateDescription do
     Ash.Changeset.change_attribute(
       changeset,
       :description,
-      generate_description_from_html(description_html)
+      description_html
     )
   end
 
