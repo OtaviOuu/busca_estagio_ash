@@ -70,7 +70,7 @@ defmodule BuscaEstagio.Internships.Internship do
     attribute :source, :atom do
       public? true
       allow_nil? false
-      constraints one_of: [:usp_eesc, :ufmg_icex, :usp_icmc]
+      constraints one_of: [:usp_eesc, :ufmg_icex, :usp_icmc, :usp_fearp]
     end
 
     attribute :views, :integer do

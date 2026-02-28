@@ -34,7 +34,8 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
             options: [
               {"USP-EESC", "usp_eesc"},
               {"USP-ICMC", "usp_icmc"},
-              {"UFMG-ICEX", "ufmg_icex"}
+              {"UFMG-ICEX", "ufmg_icex"},
+              {"USP-FEARP", "usp_fearp"}
             ]
           ]}
           sort
@@ -64,6 +65,12 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
   defp uni_badge(%{source: :ufmg_icex} = assigns) do
     ~H"""
     <div class="badge badge-secundary">UFMG-ICEX</div>
+    """
+  end
+
+  defp uni_badge(%{source: :usp_fearp} = assigns) do
+    ~H"""
+    <div class="badge badge-secundary">USP-FEARP</div>
     """
   end
 

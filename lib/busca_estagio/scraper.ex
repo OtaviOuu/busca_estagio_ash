@@ -4,7 +4,8 @@ defmodule BuscaEstagio.Scraper do
 
   resources do
     resource BuscaEstagio.Scraper.USP do
-      define :scrape_usp_internships, action: :scrape
+      define :scrape_usp_eesc_internships, action: :scrape_eesc
+      define :scrape_usp_fearp_internships, action: :scrape_fearp
     end
 
     resource BuscaEstagio.Scraper.UFMG do
