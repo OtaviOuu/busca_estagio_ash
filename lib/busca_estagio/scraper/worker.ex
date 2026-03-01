@@ -1,7 +1,11 @@
 defmodule BuscaEstagio.Scraper.Worker do
   use Oban.Worker, queue: :default, max_attempts: 10
 
+  require Logger
+
   def perform(_job) do
+    Logger.info("Starting internship scraping...")
+
     with {:ok, ufmg_icex_attrs} <- BuscaEstagio.Scraper.scrape_ufmg_icex_internships(),
          {:ok, usp_eesc_attrs} <- BuscaEstagio.Scraper.scrape_usp_eesc_internships(),
          {:ok, usp_fearp_attrs} <- BuscaEstagio.Scraper.scrape_usp_fearp_internships() do
