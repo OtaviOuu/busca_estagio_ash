@@ -57,7 +57,7 @@ defmodule BuscaEstagio.Scraper.Actions.ScrapeUfmgIcexInternships do
   end
 
   defp get_html_tree(url) do
-    with {:ok, response} <- Req.get(url),
+    with {:ok, response} <- BuscaEstagio.Scraper.Client.get(url),
          {:ok, html_tree} <- Floki.parse_document(response.body) do
       {:ok, html_tree}
     end
