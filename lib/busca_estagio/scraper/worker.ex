@@ -7,8 +7,7 @@ defmodule BuscaEstagio.Scraper.Worker do
     Logger.info("Starting internship scraping...")
 
     with {:ok, ufmg_icex_attrs} <- BuscaEstagio.Scraper.scrape_ufmg_icex_internships(),
-         {:ok, usp_eesc_attrs} <- BuscaEstagio.Scraper.scrape_usp_eesc_internships(),
-         {:ok, usp_fearp_attrs} <- BuscaEstagio.Scraper.scrape_usp_fearp_internships() do
+         {:ok, usp_eesc_attrs} <- BuscaEstagio.Scraper.scrape_usp_eesc_internships() do
       all_attrs =
         (usp_eesc_attrs ++ ufmg_icex_attrs ++ usp_fearp_attrs) |> Enum.uniq_by(& &1.url)
 
