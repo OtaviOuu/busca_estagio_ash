@@ -17,10 +17,10 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
       <Cinder.collection
         id="internships-collection"
         page_size={[default: 10, options: [10, 25, 50, 100]]}
-        resource={BuscaEstagio.Internships.Internship}
+        query={BuscaEstagio.Internships.Internship |> Ash.Query.sort(inserted_at: :desc)}
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
-        <:col :let={internship} field="title" filter sort>
+        <:col :let={internship} field="title" filter sort}>
           {format_title(internship.title)}
         </:col>
         <:col :let={internship} field="views" sort>
