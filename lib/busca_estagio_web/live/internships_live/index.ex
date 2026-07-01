@@ -18,6 +18,7 @@ defmodule BuscaEstagioWeb.InternshipsLive.Index do
         id="internships-collection"
         page_size={[default: 10, options: [10, 25, 50, 100]]}
         query={BuscaEstagio.Internships.Internship |> Ash.Query.sort(inserted_at: :desc)}
+        pagination={:keyset}
         click={fn internship -> JS.navigate(~p"/internships/#{internship.id}") end}
       >
         <:col :let={internship} field="title" filter sort}>
